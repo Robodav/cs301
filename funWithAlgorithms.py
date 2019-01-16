@@ -10,7 +10,7 @@ def firstnsum(n):
 	"""Sums the first n integers starting at 0"""
 	return sum(range(n+1))
 
-# print(firstnsum(100))
+# print(firstnsum(100)) #5050
 
 #2.********************************************************************
 def checkValid(ex):
@@ -22,9 +22,9 @@ def checkValid(ex):
 			return True
 	return False
 
-# print(checkValid("aa"))
-# print(checkValid("weoigjrk"))
-# print(checkValid("violet"))
+# print(checkValid("aa")) #True
+# print(checkValid("weoigjrk")) #False
+# print(checkValid("violet")) #True
 
 #3.********************************************************************
 def letterCount(w):
@@ -37,7 +37,7 @@ def letterCount(w):
 			di[l] += 1 #add to value
 	return di
 
-# print(letterCount("football"))
+# print(letterCount("football")) #{'f': 1, 'o': 2, 't': 1, 'b': 1a': 1, 'l': 2}
 
 def checkScramble(word1, word2, useAll=False, onlyTiles=False):
 	"""Returns whether or not a word can be made from the given tiles.
@@ -60,21 +60,22 @@ def checkScramble(word1, word2, useAll=False, onlyTiles=False):
 # print(checkScramble("football", "ball")) #True
 # print(checkScramble("retinas", "nastier")) #True
 # print(checkScramble("retina", "nastier")) #False
+# print(checkScramble("nastier", "retina", True)) #False
+# print(checkScramble("raaaaannnnn", "ran", onlyTiles=True)) #True
 
 #4.********************************************************************
-def findAll(tiles):
+def findAll(tiles, words='words.txt'):
 	"""Searches the words document for all possible scrambles
 	   of the given tiles"""
 	matches = [] #list containing all matched scrambles
-	fin = open('words.txt')
-	for line in fin:
+	if words == 'words.txt':
+		words = open('words.txt')
+	for line in words:
 		word = line.strip() #remove newlines
 		if checkScramble(tiles, word, True): #uses useAll to use all tiles
 			matches.append(word)
 	return matches
 
-# print(letterCount("retains"))
-# print(letterCount("anestri"))
 # print(findAll("retains")) #['anestri, 'nastier', 'ratines', 'retains',
                           # 'retinas', 'retsina', 'stainer', 'stearin']
 
@@ -101,28 +102,60 @@ def spellingBee(centerLetter, *args):
 # print(spellingBee('L', 'A', 'B', 'C', 'I', 'N', 'R'))
 
 #6.********************************************************************
-def bingoFinder():
-	"""Searches for all possible bingos in words.txt and finds the most
-	   common combinations of letters"""
-	comboCounter = [] #stores dictionaries in one large dictionary
-	fin = open('words.txt')
-	for line in fin:
-		word = line.strip()
-		counted = letterCount(word)
-		if len(word) == 8 and word not in comboCounter: #at least 8 chars for bingo
-			matches = findAll(word)
-			print(matches)
-			if len(matches) >= 2:
-				for match in matches:
-					comboCounter.append(match)
-	return comboCounter
-
-# def printonly8():
+# def bingoFinderOld():
+# 	"""Searches for all possible bingos in words.txt and finds the most
+# 	   common combinations of letters. This algorithm takes about
+#      10 minutes to run."""
+# 	eightLetters = []
 # 	fin = open('words.txt')
 # 	for line in fin:
 # 		word = line.strip()
-# 		if len(word) == 8:
-# 			print(word)
+# 		if len(word) == 8: #must be 8 chars for bingo
+# 			eightLetters.append(word)
+# 	currentHigh = 0 #highest number of matched scrambles
+# 	highestScoring = []
+# 	for w in eightLetters:
+# 		matches = findAll(w, eightLetters) #searches for all scrambled words
+# 		# print(matches)
+# 		if len(matches) >= currentHigh: #only shows record-holders
+# 			print(matches)
+# 			currentHigh = len(matches)
+# 		for match in matches:
+# 			eightLetters.remove(match) #removes ones already found
 
-# printonly8()
-bingoFinder()
+def bingoFinder():
+	"""Counts the letters in every single 8-letter word (bingo) in words.txt
+	   and stores them in a dictionary to show frequency. The letter
+	   combo with the highest frequency value forms the most possible
+	   bingos."""
+	combinations = {} #stores all tile combinations
+	eightLetters = [] #stores all words with 8 letters
+	fin = open('words.txt')
+	for line in fin:
+		word = line.strip()
+		if len(word) == 8:
+			eightLetters.append(word)
+	for w in eightLetters:
+		letters = [] #starts as a list for sorting
+		wfreq = letterCount(w)
+		sortItems = sorted(wfreq.items())
+		for k,v in sortItems:
+			for i in range(v): #makes sure repeat letters are included
+				letters.append(k) 
+		letters = tuple(letters) #converted to hashable type
+		if letters not in combinations: 
+			combinations[letters] = 1
+		else:
+			combinations[letters] += 1 #adds to frequency in combos
+	currentHigh = 0
+	highScorer = []
+	for k,v in combinations.items():
+		if v >= currentHigh: #only print and save if at least better than record
+			print(k, v, "times.")
+			highScorer = k
+			currentHigh = v
+	print("The most possible bingos is",currentHigh,"with",highScorer)
+
+
+bingoFinder() #this algorithm is instantaneous
+# bingoFinderAlt() #WARNING this algorithm takes a LONG time
