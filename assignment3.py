@@ -6,6 +6,80 @@ def functionTimer(f, input):
 	time2 = time.time()
 	return time2 - time1
 
+class Node:
+	def __init__(self, data):
+		self.node = data
+		self.nextnode = None
+
+	def getData(self):
+		return self.node
+
+	def setData(self, input_data):
+		self.node = input_data
+
+	def setNextNode(self, data):
+		self.nextnode = data
+
+	def getNextNode(self):
+		return self.nextnode
+
+class Linked_List:
+	def __init__(self):
+		self.head = None
+
+	def add(self, item):
+		newNode = Node(item)
+		newNode.setNextNode(self.head)
+		self.head = newNode
+
+	def remove(self, item):
+		if self.head.getData() == item:
+			self.head = self.head.getNextNode()
+		currentSelection = self.head
+		while currentSelection.getNextNode().getData() != item:
+			currentSelection = currentSelection.nextnode
+		currentSelection.setNextNode((currentSelection).nextnode.nextnode)
+
+	# def search(self, item):
+
+	# def isEmpty(self):
+	# 	return self.head == None
+
+	# def size(self):
+
+
+	# def append(self, item):
+
+
+	# def index(self, item):
+
+
+	# def insert(self, pos, item):
+
+
+	# def pop(self):
+
+
+	# def pop(self, pos):
+
+
+	def print(self):
+		print("[ ", end = '')
+		node = self.head
+		while(not node == None):
+			print(str(node.getData())+" ", end = '')
+			node = node.getNextNode()
+		print("]")
+
+def main():
+	sampleNode1 = Node(3)
+	sampleNode2 = Node(50)
+	linked1 = Linked_List()
+	linked1.add(3)
+	linked1.add(50)
+	linked1.add(75)
+	linked1.print()
+
 class Stack:
 	def __init__(self):
 		self.stack = []
@@ -94,3 +168,6 @@ class Deque:
 # testDeque.addRear(1)
 # testDeque.removeFront()
 # print(testDeque.size())
+
+if __name__ == '__main__':
+	main()
