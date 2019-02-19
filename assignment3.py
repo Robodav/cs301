@@ -38,24 +38,57 @@ class Linked_List:
 		currentSelection = self.head
 		while currentSelection.getNextNode().getData() != item:
 			currentSelection = currentSelection.nextnode
-		currentSelection.setNextNode((currentSelection).nextnode.nextnode)
+		currentSelection.setNextNode((currentSelection).getNextNode().getNextNode())
 
-	# def search(self, item):
+	def search(self, item):
+			currentSelection = self.head
+			while currentSelection.getData() != item:
+				if currentSelection.getNextNode() == None:
+					return False
+				currentSelection = currentSelection.getNextNode()
+			return True
 
-	# def isEmpty(self):
-	# 	return self.head == None
+	def isEmpty(self):
+                return self.head == None
+			
+	def size(self):
+			count = 0
+			currentSelection = self.head
+			while currentSelection != None:
+				count += 1
+				currentSelection = currentSelection.getNextNode()
+			return count
 
-	# def size(self):
+	def append(self, item):
+                        currentSelection = self.head
+                        while currentSelection.getNextNode() != None:
+                            currentSelection = currentSelection.getNextNode()
+                        itemNode = Node(item)
+                        currentSelection.setNextNode(itemNode)
+
+	def index(self, item):
+            if not (self.search(item)):
+                return False
+            count = 0
+            currentSelection = self.head
+            while currentSelection.getData() != item:
+                count += 1
+                currentSelection = currentSelection.getNextNode()
+            return count
 
 
-	# def append(self, item):
-
-
-	# def index(self, item):
-
-
-	# def insert(self, pos, item):
-
+	def insert(self, pos, item):
+            if self.size() < pos:
+                raise(IndexError)
+            itemNode = Node(item)
+            if pos == 0:
+                self.add(itemNode)
+            currentSelection = self.head
+            count = 0
+            while count < self.size() - 1:
+                self.index(currentSelection().getNextNode()) != pos:
+                currentSelection = currentSelection.getNextNode()
+            currentSelection.setNextNode(itemNode)
 
 	# def pop(self):
 
@@ -75,9 +108,11 @@ def main():
 	sampleNode1 = Node(3)
 	sampleNode2 = Node(50)
 	linked1 = Linked_List()
-	linked1.add(3)
-	linked1.add(50)
-	linked1.add(75)
+	linked1.add(1)
+	linked1.add(2)
+	linked1.add(10)
+	linked1.print()
+	linked1.insert(0,9)
 	linked1.print()
 
 class Stack:
