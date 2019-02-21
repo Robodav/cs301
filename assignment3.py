@@ -35,66 +35,87 @@ class Linked_List:
 	def remove(self, item):
 		if self.head.getData() == item:
 			self.head = self.head.getNextNode()
+			return
 		currentSelection = self.head
 		while currentSelection.getNextNode().getData() != item:
 			currentSelection = currentSelection.nextnode
 		currentSelection.setNextNode((currentSelection).getNextNode().getNextNode())
 
 	def search(self, item):
-			currentSelection = self.head
-			while currentSelection.getData() != item:
-				if currentSelection.getNextNode() == None:
-					return False
-				currentSelection = currentSelection.getNextNode()
-			return True
+		currentSelection = self.head
+		while currentSelection.getData() != item:
+			if currentSelection.getNextNode() == None:
+				return False
+			currentSelection = currentSelection.getNextNode()
+		return True
 
 	def isEmpty(self):
-                return self.head == None
+		return self.head == None
 			
 	def size(self):
-			count = 0
-			currentSelection = self.head
-			while currentSelection != None:
-				count += 1
-				currentSelection = currentSelection.getNextNode()
-			return count
+		count = 0
+		currentSelection = self.head
+		while currentSelection != None:
+			count += 1
+			currentSelection = currentSelection.getNextNode()
+		return count
 
 	def append(self, item):
-                        currentSelection = self.head
-                        while currentSelection.getNextNode() != None:
-                            currentSelection = currentSelection.getNextNode()
-                        itemNode = Node(item)
-                        currentSelection.setNextNode(itemNode)
+		currentSelection = self.head
+		while currentSelection.getNextNode() != None:
+			currentSelection = currentSelection.getNextNode()
+		itemNode = Node(item)
+		currentSelection.setNextNode(itemNode)
 
 	def index(self, item):
-            if not (self.search(item)):
-                return False
-            count = 0
-            currentSelection = self.head
-            while currentSelection.getData() != item:
-                count += 1
-                currentSelection = currentSelection.getNextNode()
-            return count
+		if not (self.search(item)):
+			return False
+		count = 0
+		currentSelection = self.head
+		while currentSelection.getData() != item:
+			count += 1
+			currentSelection = currentSelection.getNextNode()
+		return count
 
 
 	def insert(self, pos, item):
-            if self.size() < pos:
-                raise(IndexError)
-            itemNode = Node(item)
-            if pos == 0:
-                self.add(itemNode)
-            currentSelection = self.head
-            count = 0
-            while count < self.size() - 1:
-                self.index(currentSelection().getNextNode()) != pos:
-                currentSelection = currentSelection.getNextNode()
-            currentSelection.setNextNode(itemNode)
+		if self.size() < pos:
+			raise(IndexError)
+		if pos == 0:
+			self.add(item)
+			return
+		currentSelection = self.head
+		count = 1
+		while count < self.size()+1:
+			if count == pos:
+				itemNode = Node(item)
+				itemNode.setNextNode(currentSelection.getNextNode())
+				currentSelection.setNextNode(itemNode)
+				return
+			currentSelection = currentSelection.getNextNode()
+			count += 1
 
-	# def pop(self):
+	def pop(self):
+		item = self.head
+		while item.getNextNode() != None:
+			item = item.getNextNode()
+		self.remove(item.getData())
+		return item
 
-
-	# def pop(self, pos):
-
+	def pop(self, pos):
+		if self.size() < pos:
+			raise(IndexError)
+		if pos == 0:
+			self.remove(self.head.getData())
+			return
+		item = self.head
+		count = 0
+		while count < self.size()+1:
+			if count == pos:
+				self.remove(item.getData())
+				return item
+			item = item.getNextNode()
+			count += 1
 
 	def print(self):
 		print("[ ", end = '')
@@ -111,8 +132,9 @@ def main():
 	linked1.add(1)
 	linked1.add(2)
 	linked1.add(10)
+	linked1.add(12)
 	linked1.print()
-	linked1.insert(0,9)
+	print(linked1.pop(2))
 	linked1.print()
 
 class Stack:
