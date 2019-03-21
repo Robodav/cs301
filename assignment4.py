@@ -1,4 +1,8 @@
 def search_sorted_list(sorted_list, item, index=-1):
+	"""
+	Uses binary search to locate an item in a sorted list in
+	O(logn) time.
+	"""
 	largest = sorted_list[-1]
 	smallest = sorted_list[0]
 	if index == -1:
@@ -59,7 +63,20 @@ class HashList:
 		return True
 
 	def items(self):
-		return self.data
+		itemlist = []
+		for i in self.data:
+			if i != '-':
+				itemlist.append(i)
+		return itemlist
+
+def sort_list(ulist, newlist=[]):
+	smallest = min(ulist)
+	ulist.remove(smallest)
+	newlist.append(smallest)
+	if len(ulist) == 0:
+		return newlist
+	else:
+		return sort_list(ulist, newlist)
 
 def main():
 	# print(search_sorted_list([1, 2, 3, 4, 5, 6, 7], 2))
@@ -68,12 +85,12 @@ def main():
 	# print(search_sorted_list([1, 2, 3, 4, 5, 6, 7], 4))
 	# print(search_sorted_list([1, 2, 3, 4, 5, 6, 7], 7))
 
-	hash = HashList(13)
+	# hash = HashList(13)
 	# print(hash.hashFunction(16))
-	hash.put(12)
-	hash.put(8)
-	hash.put(2)
-	hash.put(56)
+	# hash.put(12)
+	# hash.put(8)
+	# hash.put(2)
+	# hash.put(56)
 	# hash.put(12)
 	# hash.put(12)
 	# hash.put(12)
@@ -86,10 +103,13 @@ def main():
 	# hash.put(12)
 	# hash.put(12)
 	# hash.put(25)
-	print(hash.items())
-	print(hash.contains(12))
-	print(hash.contains(13))
-	print(hash.contains(2))
+	# print(hash.items())
+	# print(hash.contains(12))
+	# print(hash.contains(13))
+	# print(hash.contains(2))
+
+	list1 = [5, 4, 10, 2, 12]
+	print(sort_list(list1))
 
 # Defining the HashList runs in O(n) time, as it creates a list by defining
 # n characters in that list. There isn't really a best or worst case scenario
@@ -104,7 +124,8 @@ def main():
 # contains() is the same case as hashFunction(), as they both have very similar
 # algorithms, with contains() checking for an a specified character instead
 # of one any empty one. (O(1) at best, O(n) at worst).
-# items() runs in constant time O(1), returning an attribute of the class.
+# items() runs in linear time O(n), iterating through each item no matter what
+# and appending it to a list if it is not a blank character.
 
 # In order to turn this HashList into a dictionary, there would have to be
 # functionality for assigning indices to values being added to the hash,
