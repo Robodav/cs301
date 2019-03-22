@@ -1,3 +1,8 @@
+#############################################
+# David Vandiver                            #
+# CS 301-009                                #
+# Assignment 4 -- Searching lists           #
+#############################################
 def search_sorted_list(sorted_list, item, index=-1):
 	"""
 	Uses binary search to locate an item in a sorted list in
@@ -26,32 +31,33 @@ class HashList:
 
 	def hashFunction(self, item):
 		"""
-		Finds an index for an item to be assigned, attempting to assign to the
-		remainder of the item divided by the number of indices by default,
-		then incrementing up one index if the spot is already taken.
+		Finds an index for an item to be assigned using the remainder of the
+		value divided by the number of indices.
 		"""
 		index = item % self.length 
-		count = 0
+		return index
+
+	def put(self, item):
+		"""
+		Attempts to assign to hashFunction result by default, then increments
+		up one index if the spot is already taken, until it finds one that
+		isn't.
+		"""
+		index = self.hashFunction(item)
+		count = 1
 		while self.data[index] != '-':
-			if count == self.length:
-				return -1 #tells put() function to raise exception when full
+			if count-1 == self.length:
+				raise Exception("HashList is full!")
 			if index != self.length-1:
 				index += 1
 			else:
 				index = 0
 			count += 1
-		return index
-
-	def put(self, item):
-		index = self.hashFunction(item)
-		if index != -1:
-			self.data[self.hashFunction(item)] = item
-		else:
-			raise Exception("HashList is full!")
+		self.data[index] = item
 
 	def contains(self, item):
 		expected = item % self.length
-		count = 0
+		count = 1
 		while self.data[expected] != item:
 			if count == self.length:
 				return False
@@ -85,8 +91,8 @@ def main():
 	# print(search_sorted_list([1, 2, 3, 4, 5, 6, 7], 4))
 	# print(search_sorted_list([1, 2, 3, 4, 5, 6, 7], 7))
 
-	# hash = HashList(13)
-	# print(hash.hashFunction(16))
+	# hash = HashList(12)
+	# # print(hash.hashFunction(16))
 	# hash.put(12)
 	# hash.put(8)
 	# hash.put(2)
@@ -99,29 +105,26 @@ def main():
 	# hash.put(12)
 	# hash.put(12)
 	# hash.put(12)
-	# hash.put(12)
-	# hash.put(12)
-	# hash.put(12)
-	# hash.put(25)
+	# # hash.put(12)
+	# # hash.put(12)
+	# # hash.put(12)
+	# # hash.put(25)
 	# print(hash.items())
 	# print(hash.contains(12))
 	# print(hash.contains(13))
 	# print(hash.contains(2))
 
-	list1 = [5, 4, 10, 2, 12]
-	print(sort_list(list1))
+	# list1 = [5, 4, 10, 2, 12]
+	# print(sort_list(list1))
 
 # Defining the HashList runs in O(n) time, as it creates a list by defining
 # n characters in that list. There isn't really a best or worst case scenario
 # for this, it will always be O(n), where n is the size of the Hash list.
-# The hashFunction() method also runs in O(n) time, evaluating an index in
-# constant time, then running through indices. Of course, it runs in O(n)
-# only in the worst case, in which it would have to run through every index
-# with max collisions. Otherwise, it would run in consant O(1) time.
-# put() runs in the same time as hashFunction(), as it relies on hashFunction()
-# to determine an index. It then executes operations in constant time, so
-# it will be O(1) at best and O(n) at worst.
-# contains() is the same case as hashFunction(), as they both have very similar
+# The hashFunction() method runs in O(1) time,  running a simple operation.
+# put() runs in linear O(n) time, as it relies on hashFunction()'s constant time
+# to determine an index. It then executes operations using a loop, checking the
+# entire list at worst. It will be O(1) at best and O(n) at worst.
+# contains() is the same case as put(), as they both have very similar
 # algorithms, with contains() checking for an a specified character instead
 # of one any empty one. (O(1) at best, O(n) at worst).
 # items() runs in linear time O(n), iterating through each item no matter what
