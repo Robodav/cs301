@@ -24,7 +24,6 @@ def bubbleSort(unsorted):
     return unsorted
 
 def selectionSort(unsorted):
-    print(unsorted)
     for i in range(len(unsorted)):
         largest = max(unsorted[:len(unsorted)-i])
         ind = unsorted.index(largest)
@@ -33,8 +32,6 @@ def selectionSort(unsorted):
     return unsorted
 
 def mergeSort(sorted1, sorted2):
-    print(sorted1)
-    print(sorted2)
     combined = []
     if len(sorted1) >= len(sorted2):
         largest = sorted1
@@ -53,6 +50,16 @@ def mergeSort(sorted1, sorted2):
     for j in range(len(smallest),len(largest)):
         combined.append(largest[j])
     return combined
+
+def recursiveMerge(unsorted):
+    unsorted1 = unsorted[0:len(unsorted)//2]
+    unsorted2 = unsorted[len(unsorted)//2:len(unsorted)]
+    if len(unsorted) >= 2:
+        unsorted1 = recursiveMerge(unsorted1)
+        unsorted2 = recursiveMerge(unsorted2)
+    else:
+        merged = mergeSort(unsorted1,unsorted2)
+        return merged
 
 def main():
     #---------Insertion Sort----------#
@@ -74,16 +81,37 @@ def main():
     # print(bubbleSort([2,2,2,1,2]))
     # print(bubbleSort([2]))
 
-    #
+    # Bubble sort's worst case scenario would be a complete reverse order, requring each
+    # item to bubble up. The amount they will have to traverse will be shorter each time,
+    # so the worst case running time would be O(nlogn), longer than linear, but not quite
+    # n^2. 
 
+    #-------Selection Sort--------#
     # print(selectionSort([5,3,2,4,1]))
     # print(selectionSort([12,98,100,2,9400,45]))
     # print(selectionSort([2,2,2,1,2]))
     # print(selectionSort([2]))
 
+    # Selection sort runs in O(n^2) at worst, as it iterates through all elements in the
+    # unsorted list and looks for a maximum, both of which take O(n) time.
+
+    #-------Merge Sort-------#
     # print(mergeSort([1,3,5],[2,4,6]))
     # print(mergeSort([1,50,100],[2,49,70,110,120,130]))
     # print(mergeSort([2],[1]))
+
+    # Merge sort's worst case runs in O(n) time, with n being the length of the larger list.
+    # It only compares two values and then appends them to a different list without insertion,
+    # all of which is done in constant time. The only linear function is the iteration through
+    # the length of the list.
+
+    print(recursiveMerge([5,4,3,2,1]))
+    # print(recursiveMerge([2, 10, 1, 3, 12, 7]))
+    # print(recursiveMerge([1]))
+
+    # The fastest function will be merge sort, as it uses two already sorted lists to create
+    # one combined sorted list. This pre-existing sorting significantly boosts the time it takes
+    # to make one sorted data structure.
 
 if __name__ == "__main__":
     main()
