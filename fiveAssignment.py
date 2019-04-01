@@ -33,6 +33,12 @@ def selectionSort(unsorted):
 
 def mergeSort(sorted1, sorted2):
     combined = []
+    if sorted1[-1] < sorted2[0]:     #If all values in one array are
+        combined = sorted1 + sorted2 #greater than or less than the other,
+        return combined              #simply append the two.
+    elif sorted1[0] > sorted2[-1]:  
+        combined = sorted2 + sorted1
+        return combined
     if len(sorted1) >= len(sorted2):
         largest = sorted1
         smallest = sorted2
@@ -54,12 +60,27 @@ def mergeSort(sorted1, sorted2):
 def recursiveMerge(unsorted):
     unsorted1 = unsorted[0:len(unsorted)//2]
     unsorted2 = unsorted[len(unsorted)//2:len(unsorted)]
-    if len(unsorted) >= 2:
-        unsorted1 = recursiveMerge(unsorted1)
-        unsorted2 = recursiveMerge(unsorted2)
+    print(unsorted1,unsorted2)
+    print("UNSORTED LISTS")
+    if len(unsorted1) == 1 and len(unsorted2) == 1:
+        print(mergeSort(unsorted1,unsorted2))
+        print("MERGED HALVES")
+        return mergeSort(unsorted1,unsorted2)
     else:
-        merged = mergeSort(unsorted1,unsorted2)
-        return merged
+        if len(unsorted1) > 1:
+            unsorted1 = recursiveMerge(unsorted1)
+        if len(unsorted2) > 1:
+            unsorted2 = recursiveMerge(unsorted2)
+    # elif len(unsorted1) > 1:
+    #     unsorted1 = recursiveMerge(unsorted1)
+    # elif len(unsorted2) > 1:
+    #     unsorted2 = recursiveMerge(unsorted2)
+    print(unsorted1,unsorted2)
+    print("FINAL HALVES")
+    merged = mergeSort(unsorted1,unsorted2)
+    print(merged)
+    print("MERGED")
+    return merged
 
 def main():
     #---------Insertion Sort----------#
@@ -99,15 +120,17 @@ def main():
     # print(mergeSort([1,3,5],[2,4,6]))
     # print(mergeSort([1,50,100],[2,49,70,110,120,130]))
     # print(mergeSort([2],[1]))
+    # print(mergeSort([1,2,3],[13,14,15,16]))
 
     # Merge sort's worst case runs in O(n) time, with n being the length of the larger list.
     # It only compares two values and then appends them to a different list without insertion,
     # all of which is done in constant time. The only linear function is the iteration through
     # the length of the list.
 
+    #--------Recursive Merge-------#
     print(recursiveMerge([5,4,3,2,1]))
-    # print(recursiveMerge([2, 10, 1, 3, 12, 7]))
-    # print(recursiveMerge([1]))
+    print(recursiveMerge([2, 10, 1, 3, 12, 7]))
+    print(recursiveMerge([1]))
 
     # The fastest function will be merge sort, as it uses two already sorted lists to create
     # one combined sorted list. This pre-existing sorting significantly boosts the time it takes
