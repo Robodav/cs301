@@ -71,10 +71,6 @@ def recursiveMerge(unsorted):
             unsorted1 = recursiveMerge(unsorted1)
         if len(unsorted2) > 1:
             unsorted2 = recursiveMerge(unsorted2)
-    # elif len(unsorted1) > 1:
-    #     unsorted1 = recursiveMerge(unsorted1)
-    # elif len(unsorted2) > 1:
-    #     unsorted2 = recursiveMerge(unsorted2)
     print(unsorted1,unsorted2)
     print("FINAL HALVES")
     merged = mergeSort(unsorted1,unsorted2)
@@ -128,9 +124,11 @@ def main():
     # the length of the list.
 
     #--------Recursive Merge-------#
-    print(recursiveMerge([5,4,3,2,1]))
-    print(recursiveMerge([2, 10, 1, 3, 12, 7]))
-    print(recursiveMerge([1]))
+    # print(recursiveMerge([5,4,3,2,1]))
+    # print(recursiveMerge([2, 10, 1, 3, 12, 7]))
+    # print(recursiveMerge([1]))
+
+    print(mergeSort([1,2,10],[3,7,12]))
 
     # The fastest function will be merge sort, as it uses two already sorted lists to create
     # one combined sorted list. This pre-existing sorting significantly boosts the time it takes
