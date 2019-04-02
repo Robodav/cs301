@@ -33,12 +33,12 @@ def selectionSort(unsorted):
 
 def mergeSort(sorted1, sorted2):
     combined = []
-    if sorted1[-1] < sorted2[0]:     #If all values in one array are
-        combined = sorted1 + sorted2 #greater than or less than the other,
-        return combined              #simply append the two.
-    elif sorted1[0] > sorted2[-1]:  
-        combined = sorted2 + sorted1
-        return combined
+    # if sorted1[-1`] < sorted2[0]:     #If all values in one array are
+    #     combined = sorted1 + sorted2 #greater than or less than the other,
+    #     return combined              #simply append the two.
+    # elif sorted1[0] > sorted2[-1]:  
+    #     combined = sorted2 + sorted1
+    #     return combined
     if len(sorted1) >= len(sorted2):
         largest = sorted1
         smallest = sorted2
@@ -121,6 +121,7 @@ def main():
     # print(mergeSort([1,50,100],[2,49,70,110,120,130]))
     # print(mergeSort([2],[1]))
     # print(mergeSort([1,2,3],[13,14,15,16]))
+    print(mergeSort([1,2,10],[3,7,12]))
 
     # Merge sort's worst case runs in O(n) time, with n being the length of the larger list.
     # It only compares two values and then appends them to a different list without insertion,
@@ -128,9 +129,9 @@ def main():
     # the length of the list.
 
     #--------Recursive Merge-------#
-    print(recursiveMerge([5,4,3,2,1]))
-    print(recursiveMerge([2, 10, 1, 3, 12, 7]))
-    print(recursiveMerge([1]))
+    # print(recursiveMerge([5,4,3,2,1]))
+    # print(recursiveMerge([2, 10, 1, 3, 12, 7]))
+    # print(recursiveMerge([1]))
 
     # The fastest function will be merge sort, as it uses two already sorted lists to create
     # one combined sorted list. This pre-existing sorting significantly boosts the time it takes
