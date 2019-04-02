@@ -109,8 +109,7 @@ def main():
 
     # Bubble sort's worst case scenario would be a complete reverse order, requring each
     # item to bubble up. The amount they will have to traverse will be shorter each time,
-    # so the worst case running time would be O(nlogn), longer than linear, but not quite
-    # n^2. 
+    # but only by 1 index, not enough to break O(n^2), its worst case running time.
 
     #-------Selection Sort--------#
     # print(selectionSort([5,3,2,4,1]))
@@ -141,9 +140,29 @@ def main():
     # Recursive merge's worst case time is O(nlogn), as it recursively cuts the merging in half, and only uses
     # merge sort at worst, which itself runs in O(n) time.
 
+    #-------Benchmarking--------#
     # The fastest function will be merge sort, as it uses two already sorted lists to create
     # one combined sorted list. This pre-existing sorting significantly boosts the time it takes
     # to make one sorted data structure.
+
+    import time
+    def functionTimer(f, input):
+        time1 = time.time()
+        f(input)
+        time2 = time.time()
+        return time2 - time1
+
+    def functionTimer2(f, input1, input2):
+        time1 = time.time()
+        f(input1, input2)
+        time2 = time.time()
+        return time2 - time1
+    
+    print(functionTimer(insertionSort,[6,5,4,3,2,1]) , "Insertion")
+    print(functionTimer(bubbleSort,[6,5,4,3,2,1]) , "Bubble")
+    print(functionTimer(selectionSort,[6,5,4,3,2,1]) , "Selection")
+    print(functionTimer2(mergeSort,[6,5,4],[3,2,1]), "Merge")
+    print(functionTimer(recursiveMerge,[6,5,4,3,2,1]) , "Recursive Merge")
 
 if __name__ == "__main__":
     main()
