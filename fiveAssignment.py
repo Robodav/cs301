@@ -39,22 +39,33 @@ def mergeSort(sorted1, sorted2):
     # elif sorted1[0] > sorted2[-1]:  
     #     combined = sorted2 + sorted1
     #     return combined
-    if len(sorted1) >= len(sorted2):
-        largest = sorted1
-        smallest = sorted2
-    else:
-        largest = sorted2
-        smallest = sorted1
-    difference = len(largest) - len(smallest)
-    for i in range(len(smallest)):
-        if smallest[i] <= largest[i]:
-            combined.append(smallest[i])
-            combined.append(largest[i])
+    while len(combined) < len(sorted1) + len(sorted2):
+        ordered = [len(combined), len(sorted1), len(sorted2)]
+        for i in range((min(ordered)):
+            if sorted1[i] <= sorted2[i]:
+                if sorted1[i] >= ordered[i]:
+                    ordered.append(sorted1[i])
+                else:
+                    ordered.insert(i, sorted1[i])
+                sorted1.remove(sorted1[i])
+            elif sorted1[i] >= sorted2[i]:
+
+        if len(sorted1) >= len(sorted2):
+            largest = sorted1
+            smallest = sorted2
         else:
-            combined.append(largest[i])
-            combined.append(smallest[i])
-    for j in range(len(smallest),len(largest)):
-        combined.append(largest[j])
+            largest = sorted2
+            smallest = sorted1
+        difference = len(largest) - len(smallest)
+        for i in range(len(smallest)):
+            if smallest[i] <= largest[i]:
+                combined.append(smallest[i])
+                combined.append(largest[i])
+            else:
+                combined.append(largest[i])
+                combined.append(smallest[i])
+    # for j in range(len(smallest),len(largest)):
+    #     combined.append(largest[j])
     return combined
 
 def recursiveMerge(unsorted):
@@ -71,10 +82,6 @@ def recursiveMerge(unsorted):
             unsorted1 = recursiveMerge(unsorted1)
         if len(unsorted2) > 1:
             unsorted2 = recursiveMerge(unsorted2)
-    # elif len(unsorted1) > 1:
-    #     unsorted1 = recursiveMerge(unsorted1)
-    # elif len(unsorted2) > 1:
-    #     unsorted2 = recursiveMerge(unsorted2)
     print(unsorted1,unsorted2)
     print("FINAL HALVES")
     merged = mergeSort(unsorted1,unsorted2)
