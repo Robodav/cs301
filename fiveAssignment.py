@@ -1,3 +1,9 @@
+######################################
+# David Vandiver                     #
+# CS301                              #
+# Assignment 5 - Sorting Lists       #
+######################################
+
 def insertionSort(unsorted):
     sortedlist = [unsorted[0]]
     unsorted.pop(0)
@@ -32,61 +38,53 @@ def selectionSort(unsorted):
     return unsorted
 
 def mergeSort(sorted1, sorted2):
+    """
+    Takes two sorted lists and compares each of their values, adding the smallest
+    value compared to a new list in order to combine them together into one sorted
+    list.
+    """
+    combinedlength = len(sorted1) + len(sorted2)
     combined = []
-    # if sorted1[-1`] < sorted2[0]:     #If all values in one array are
-    #     combined = sorted1 + sorted2 #greater than or less than the other,
-    #     return combined              #simply append the two.
-    # elif sorted1[0] > sorted2[-1]:  
-    #     combined = sorted2 + sorted1
-    #     return combined
-    while len(combined) < len(sorted1) + len(sorted2):
-        ordered = [len(combined), len(sorted1), len(sorted2)]
-        for i in range((min(ordered)):
-            if sorted1[i] <= sorted2[i]:
-                if sorted1[i] >= ordered[i]:
-                    ordered.append(sorted1[i])
-                else:
-                    ordered.insert(i, sorted1[i])
-                sorted1.remove(sorted1[i])
-            elif sorted1[i] >= sorted2[i]:
-
-        if len(sorted1) >= len(sorted2):
-            largest = sorted1
-            smallest = sorted2
-        else:
-            largest = sorted2
-            smallest = sorted1
-        difference = len(largest) - len(smallest)
-        for i in range(len(smallest)):
-            if smallest[i] <= largest[i]:
-                combined.append(smallest[i])
-                combined.append(largest[i])
+    count1 = 0       # Keeps track of iteration through first list
+    count2 = 0       # Does the same with second list
+    while len(combined) < combinedlength:
+        if count1 < len(sorted1) and count2 < len(sorted2):
+            if sorted1[count1] == sorted2[count2]: # If the two values are equal, add both at the same time
+                combined.append(sorted1[count1])
+                combined.append(sorted2[count2])
+                count1 += 1
+                count2 += 1
+            elif sorted1[count1] < sorted2[count2]: # Add the smaller value and keep larger where it is
+                combined.append(sorted1[count1])
+                count1 += 1
             else:
-                combined.append(largest[i])
-                combined.append(smallest[i])
-    # for j in range(len(smallest),len(largest)):
-    #     combined.append(largest[j])
+                combined.append(sorted2[count2])
+                count2 += 1
+        elif count1 == len(sorted1):  # If first list is completelely done, just add the rest in second list
+            if count2 < len(sorted2):
+                combined.append(sorted2[count2])
+                count2 += 1
+        else:                         # Reverse case with list 2 completely done
+            if count1 < len(sorted1):
+                combined.append(sorted1[count1])
+                count1 += 1
     return combined
 
 def recursiveMerge(unsorted):
-    unsorted1 = unsorted[0:len(unsorted)//2]
-    unsorted2 = unsorted[len(unsorted)//2:len(unsorted)]
-    print(unsorted1,unsorted2)
-    print("UNSORTED LISTS")
-    if len(unsorted1) == 1 and len(unsorted2) == 1:
-        print(mergeSort(unsorted1,unsorted2))
-        print("MERGED HALVES")
+    """
+    Takes one unsorted list and recursively splits it in half, merge
+    sorting the halves until there is one sorted list.
+    """
+    unsorted1 = unsorted[0:len(unsorted)//2] # unsorted1 and unsorted2 are the two halves
+    unsorted2 = unsorted[len(unsorted)//2:len(unsorted)] 
+    if len(unsorted1) == 1 and len(unsorted2) == 1: # merge unsorted lists ONLY when their lengths are 1
         return mergeSort(unsorted1,unsorted2)
     else:
-        if len(unsorted1) > 1:
-            unsorted1 = recursiveMerge(unsorted1)
+        if len(unsorted1) > 1: # if their length is greater than 1, there's no guarantee they're sorted
+            unsorted1 = recursiveMerge(unsorted1) # so put them back through until they're at 1 to ensure merge sort works
         if len(unsorted2) > 1:
             unsorted2 = recursiveMerge(unsorted2)
-    print(unsorted1,unsorted2)
-    print("FINAL HALVES")
-    merged = mergeSort(unsorted1,unsorted2)
-    print(merged)
-    print("MERGED")
+    merged = mergeSort(unsorted1,unsorted2) # this merge sort can be executed because the two halves are now definitely sorted
     return merged
 
 def main():
@@ -125,20 +123,23 @@ def main():
 
     #-------Merge Sort-------#
     # print(mergeSort([1,3,5],[2,4,6]))
-    # print(mergeSort([1,50,100],[2,49,70,110,120,130]))
+    # print(mergeSort([1,50,100],[2,49,70,71,72,73]))
     # print(mergeSort([2],[1]))
     # print(mergeSort([1,2,3],[13,14,15,16]))
-    print(mergeSort([1,2,10],[3,7,12]))
 
-    # Merge sort's worst case runs in O(n) time, with n being the length of the larger list.
+    # Merge sort's worst case runs in O(n) time, with n being the length of the combined list.
     # It only compares two values and then appends them to a different list without insertion,
     # all of which is done in constant time. The only linear function is the iteration through
-    # the length of the list.
+    # each value being added
 
     #--------Recursive Merge-------#
+    # print(recursiveMerge([1,2,3,4,5]))
     # print(recursiveMerge([5,4,3,2,1]))
     # print(recursiveMerge([2, 10, 1, 3, 12, 7]))
     # print(recursiveMerge([1]))
+
+    # Recursive merge's worst case time is O(nlogn), as it recursively cuts the merging in half, and only uses
+    # merge sort at worst, which itself runs in O(n) time.
 
     # The fastest function will be merge sort, as it uses two already sorted lists to create
     # one combined sorted list. This pre-existing sorting significantly boosts the time it takes
