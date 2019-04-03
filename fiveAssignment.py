@@ -145,24 +145,24 @@ def main():
     # one combined sorted list. This pre-existing sorting significantly boosts the time it takes
     # to make one sorted data structure.
 
-    import time
-    def functionTimer(f, input):
-        time1 = time.time()
-        f(input)
-        time2 = time.time()
-        return time2 - time1
+    # import time
+    # def functionTimer(f, input):
+    #     time1 = time.time()
+    #     f(input)
+    #     time2 = time.time()
+    #     return time2 - time1
 
-    def functionTimer2(f, input1, input2):
-        time1 = time.time()
-        f(input1, input2)
-        time2 = time.time()
-        return time2 - time1
+    # def functionTimer2(f, input1, input2):
+    #     time1 = time.time()
+    #     f(input1, input2)
+    #     time2 = time.time()
+    #     return time2 - time1
     
-    print(functionTimer(insertionSort,[6,5,4,3,2,1]) , "Insertion")
-    print(functionTimer(bubbleSort,[6,5,4,3,2,1]) , "Bubble")
-    print(functionTimer(selectionSort,[6,5,4,3,2,1]) , "Selection")
-    print(functionTimer2(mergeSort,[6,5,4],[3,2,1]), "Merge")
-    print(functionTimer(recursiveMerge,[6,5,4,3,2,1]) , "Recursive Merge")
+    # print(functionTimer(insertionSort,[6,5,4,3,2,1]) , "Insertion")
+    # print(functionTimer(bubbleSort,[6,5,4,3,2,1]) , "Bubble")
+    # print(functionTimer(selectionSort,[6,5,4,3,2,1]) , "Selection")
+    # print(functionTimer2(mergeSort,[6,5,4],[3,2,1]), "Merge")
+    # print(functionTimer(recursiveMerge,[6,5,4,3,2,1]) , "Recursive Merge")
 
 if __name__ == "__main__":
     main()
