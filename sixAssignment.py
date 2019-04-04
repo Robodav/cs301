@@ -27,17 +27,17 @@ class Tree:
         self.root = None
         self.currentNode = self.root
 
-    # def __repr__(self):
-    #     visual = ""
-    #     print("[ ", end = '')
-    #     node = self.root
-    #     print(node.getData())
-    #     while not node.getChildren() == None:
-    #         for child in node.getChildren():
-    #             print(child.getData())
-    #         # print(str(node.getData())+" ", end = '')
-    #         # node = node.getNextNode()
-    #     print("]")
+    def __repr__(self):
+        visual = ""
+        visual += str(self.root.getData())
+        nodes = self.root.getChildren()
+        while nodes != []:
+            visual += "\n"
+            for node in nodes:
+                visual += str(node.getData())
+            nodes = []
+            
+        return visual
 
     def getCurrentNode(self):
         return self.currentNode
@@ -52,15 +52,6 @@ class Tree:
             self.currentNode = self.root
         else:
             self.currentNode.addChild(item)
-
-	# def remove(self, item):
-	# 	if self.root.getData() == item:
-	# 		self.root = self.root.getNextNode()
-	# 		return
-	# 	currentSelection = self.root
-	# 	while currentSelection.getNextNode().getData() != item:
-	# 		currentSelection = currentSelection.nextnode
-	# 	currentSelection.setNextNode((currentSelection).getNextNode().getNextNode())
 
 	# def search(self, item):
 	# 	currentSelection = self.root
@@ -78,7 +69,7 @@ def main():
     # print(sampleroot)
     tree1 = Tree()
     tree1.add(sampleroot)
-    print(tree1.getCurrentNode())
+    print(tree1)
     # tree1.print()
 
 if __name__ == "__main__":
