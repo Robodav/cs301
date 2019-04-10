@@ -17,7 +17,7 @@ class Node:
             self.children.append(data)
         else:
             newChild = Node(data)
-            self.children.append(data)
+            self.children.append(newChild)
 
     def getChildren(self):
         return self.children
@@ -41,16 +41,24 @@ class Tree:
 
     def getCurrentNode(self):
         current = "Current Node:\n"
-        current += str(self.currentNode.getData()) + "\n"
+        current += self.currentNode.__repr__() + "\n"
         current += "Children:\n"
         current += "["
         for n in self.currentNode.getChildren():
-            current += n.getData()
+            current += n.__repr__()
         current += "]"
         return current
     
-    def setCurrentNode(self):
-        return
+    def setCurrentNode(self, target):
+        for n in self.currentNode.getChildren():
+            if n.getData() == target:
+                self.currentNode = n
+                return
+        change = input("Node not found.\nEnter 1 to set current to root, or press ENTER to remain at current node.")
+        if input == "1":
+            self.currentNode = self.root
+        else:
+            return
 
     def add(self, item):
         newNode = Node(item)
@@ -78,7 +86,7 @@ def main():
     tree1.add(24)
     tree1.add(13)
     tree1.add(5)
-    tree1.getCurrentNode()
+    print(tree1.getCurrentNode())
     # print(tree1)
 
 if __name__ == "__main__":
