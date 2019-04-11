@@ -84,6 +84,92 @@ class Tree:
     def isEmpty(self):
         return self.root == None
 
+class Vertex:
+    def __init__(self, data):
+        self.node = data
+        self.children = []
+
+    def __repr__(self):
+        return "["+str(self.node)+"]"
+
+    def getData(self):
+        return self.node
+
+    def setData(self, data):
+        self.node = data
+
+    def addChild(self, data):
+        if type(data) == Node:
+            self.children.append(data)
+        else:
+            newChild = Node(data)
+            self.children.append(newChild)
+
+    def getChildren(self):
+        return self.children
+
+class DirectedGraph:
+    def __init__(self):
+        self.root = None
+        self.currentNode = self.root
+
+    def __repr__(self):
+        visual = ""
+        nodes = [self.root]
+        while nodes != []:
+            newnodes = []
+            for node in nodes:
+                visual += "[" + str(node.getData()) + "]"
+                for n in node.getChildren():
+                    newnodes.append(n)
+                nodes = newnodes
+            visual += "\n"
+        return visual
+
+    def getCurrentNode(self):
+        current = "Current Node:\n"
+        current += self.currentNode.__repr__() + "\n"
+        current += "Children:\n"
+        current += "["
+        for n in self.currentNode.getChildren():
+            current += n.__repr__()
+        current += "]"
+        return current
+    
+    def setCurrentNode(self, target):
+        for n in self.currentNode.getChildren():
+            if n.getData() == target:
+                self.currentNode = n
+                return
+        change = input("Node not found.\nEnter 1 to set current to root, or press ENTER to remain at current node.\n")
+        if change == "1":
+            self.currentNode = self.root
+        else:
+            return
+
+    def add(self, item):
+        newNode = Node(item)
+        if self.root == None:
+            self.root = newNode
+            self.currentNode = self.root
+        else:
+            self.currentNode.addChild(item)
+
+    def search(self, item):
+        currentSelection = [self.root]
+        while currentSelection != []:
+            nextLevel = []
+            for node in currentSelection:
+                if node.getData() == item:
+                    return True
+                for n in node.getChildren():
+                    nextLevel.append(n)
+            currentSelection = nextLevel
+        return False
+
+    def isEmpty(self):
+        return self.root == None
+
 def main():
     # sampleroot = Node(24)
     # print(sampleroot)
