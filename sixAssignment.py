@@ -31,12 +31,13 @@ class Tree:
         visual = ""
         nodes = [self.root]
         while nodes != []:
-            visual += "\n"
+            newnodes = []
             for node in nodes:
-                visual += str(node.getData())
-                nodes.remove(node)
+                visual += "[" + str(node.getData()) + "]"
                 for n in node.getChildren():
-                    nodes.append(n)
+                    newnodes.append(n)
+                nodes = newnodes
+            visual += "\n"
         return visual
 
     def getCurrentNode(self):
@@ -54,8 +55,8 @@ class Tree:
             if n.getData() == target:
                 self.currentNode = n
                 return
-        change = input("Node not found.\nEnter 1 to set current to root, or press ENTER to remain at current node.")
-        if input == "1":
+        change = input("Node not found.\nEnter 1 to set current to root, or press ENTER to remain at current node.\n")
+        if change == "1":
             self.currentNode = self.root
         else:
             return
@@ -68,13 +69,17 @@ class Tree:
         else:
             self.currentNode.addChild(item)
 
-	# def search(self, item):
-	# 	currentSelection = self.root
-	# 	while currentSelection.getData() != item:
-	# 		if currentSelection.getNextNode() == None:
-	# 			return False
-	# 		currentSelection = currentSelection.getNextNode()
-	# 	return True
+    def search(self, item):
+        currentSelection = [self.root]
+        while currentSelection != []:
+            nextLevel = []
+            for node in currentSelection:
+                if node.getData() == item:
+                    return True
+                for n in node.getChildren():
+                    nextLevel.append(n)
+            currentSelection = nextLevel
+        return False
 
     def isEmpty(self):
         return self.root == None
@@ -87,7 +92,16 @@ def main():
     tree1.add(13)
     tree1.add(5)
     print(tree1.getCurrentNode())
-    # print(tree1)
+    tree1.setCurrentNode(13)
+    # print(tree1.getCurrentNode())
+    tree1.add(8)
+    print(tree1)
+    print(tree1.search(8))
+    print(tree1.search(24))
+
+    # Tree's search runs in O(n) time because its worst case is
+    # searching the entirety of the tree (length n), checking all of the rows
+    # and finding no match.
 
 if __name__ == "__main__":
     main()
