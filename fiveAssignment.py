@@ -43,31 +43,22 @@ def mergeSort(sorted1, sorted2):
     value compared to a new list in order to combine them together into one sorted
     list.
     """
-    combinedlength = len(sorted1) + len(sorted2)
     combined = []
     count1 = 0       # Keeps track of iteration through first list
     count2 = 0       # Does the same with second list
-    while len(combined) < combinedlength:
-        if count1 < len(sorted1) and count2 < len(sorted2):
-            if sorted1[count1] == sorted2[count2]: # If the two values are equal, add both at the same time
-                combined.append(sorted1[count1])
-                combined.append(sorted2[count2])
-                count1 += 1
-                count2 += 1
-            elif sorted1[count1] < sorted2[count2]: # Add the smaller value and keep larger where it is
-                combined.append(sorted1[count1])
-                count1 += 1
-            else:
-                combined.append(sorted2[count2])
-                count2 += 1
-        elif count1 == len(sorted1):  # If first list is completelely done, just add the rest in second list
-            if count2 < len(sorted2):
-                combined.append(sorted2[count2])
-                count2 += 1
-        else:                         # Reverse case with list 2 completely done
-            if count1 < len(sorted1):
-                combined.append(sorted1[count1])
-                count1 += 1
+    while len(sorted1) > count1 and len(sorted2) > count2:
+        if sorted1[count1] < sorted2[count2]: # Add the smaller value and keep larger where it is
+            combined.append(sorted1[count1])
+            count1 += 1
+        else:
+            combined.append(sorted2[count2])
+            count2 += 1
+    while len(sorted1) > count1:
+        combined.append(sorted1[count1])
+        count1 += 1
+    while len(sorted2) > count2:
+        combined.append(sorted2[count2])
+        count2 += 1
     return combined
 
 def recursiveMerge(unsorted):
@@ -121,10 +112,10 @@ def main():
     # unsorted list and looks for a maximum, both of which take O(n) time.
 
     #-------Merge Sort-------#
-    # print(mergeSort([1,3,5],[2,4,6]))
-    # print(mergeSort([1,50,100],[2,49,70,71,72,73]))
-    # print(mergeSort([2],[1]))
-    # print(mergeSort([1,2,3],[13,14,15,16]))
+    print(mergeSort([1,3,5],[2,4,6]))
+    print(mergeSort([1,50,100],[2,49,70,71,72,73]))
+    print(mergeSort([2],[1]))
+    print(mergeSort([1,2,3],[13,14,15,16]))
 
     # Merge sort's worst case runs in O(n) time, with n being the length of the combined list.
     # It only compares two values and then appends them to a different list without insertion,
