@@ -86,27 +86,27 @@ class Tree:
 
 class Vertex:
     def __init__(self, data):
-        self.node = data
-        self.children = []
+        self.vertex = data
+        self.directedEdges = []
 
     def __repr__(self):
-        return "["+str(self.node)+"]"
+        return "["+str(self.vertex)+"]"
 
     def getData(self):
-        return self.node
+        return self.vertex
 
     def setData(self, data):
-        self.node = data
+        self.vertex = data
 
-    def addChild(self, data):
-        if type(data) == Node:
-            self.children.append(data)
+    def addEdge(self, data):
+        if type(data) == Vertex:
+            self.directedEdges.append(data)
         else:
-            newChild = Node(data)
-            self.children.append(newChild)
+            newEdge = Vertex(data)
+            self.directedEdges.append(newEdge)
 
-    def getChildren(self):
-        return self.children
+    def getEdges(self):
+        return self.directedEdges
 
 class DirectedGraph:
     def __init__(self):
