@@ -111,6 +111,7 @@ class Vertex:
 class DirectedGraph:
     def __init__(self):
         self.currentVertex = None
+        self.checked = []
 
     def __repr__(self):
         visual = ""
@@ -125,12 +126,12 @@ class DirectedGraph:
             visual += "\n"
         return visual
 
-    def getCurrentNode(self):
+    def getCurrentVertex(self):
         current = "Current Node:\n"
-        current += self.currentNode.__repr__() + "\n"
-        current += "Children:\n"
+        current += self.currentVertex.__repr__() + "\n"
+        current += "Directed:\n"
         current += "["
-        for n in self.currentNode.getChildren():
+        for n in self.currentNode.getEdges():
             current += n.__repr__()
         current += "]"
         return current
@@ -154,10 +155,10 @@ class DirectedGraph:
             self.currentVertex.addEdge(item)
 
     def search(self, item):
-        currentSelection = [self.root]
+        currentSelection = self.currentVertex
         while currentSelection != []:
             nextLevel = []
-            for node in currentSelection:
+            for vertex in currentSelection:
                 if node.getData() == item:
                     return True
                 for n in node.getChildren():
@@ -166,7 +167,7 @@ class DirectedGraph:
         return False
 
     def isEmpty(self):
-        return self.root == None
+        return self.currentVertex == None
 
 def main():
     #------------Tree--------------#
@@ -190,6 +191,10 @@ def main():
 
     #--------Directed Graph--------#
     sampleVertex = Vertex(10)
+    directed1 = DirectedGraph()
+    directed1.add(sampleVertex)
+    directed1.add(12)
+    directed1.add()
     
 
 if __name__ == "__main__":
