@@ -110,19 +110,18 @@ class Vertex:
 
 class DirectedGraph:
     def __init__(self):
-        self.root = None
-        self.currentNode = self.root
+        self.currentVertex = None
 
     def __repr__(self):
         visual = ""
-        nodes = [self.root]
-        while nodes != []:
+        vertices = []
+        while vertices != []:
             newnodes = []
-            for node in nodes:
+            for node in vertices:
                 visual += "[" + str(node.getData()) + "]"
                 for n in node.getChildren():
                     newnodes.append(n)
-                nodes = newnodes
+                vertices = newnodes
             visual += "\n"
         return visual
 
@@ -148,12 +147,11 @@ class DirectedGraph:
             return
 
     def add(self, item):
-        newNode = Node(item)
-        if self.root == None:
-            self.root = newNode
-            self.currentNode = self.root
+        newVertex = Vertex(item)
+        if self.currentVertex == None:
+            self.currentVertex = newVertex
         else:
-            self.currentNode.addChild(item)
+            self.currentVertex.addEdge(item)
 
     def search(self, item):
         currentSelection = [self.root]
@@ -171,23 +169,28 @@ class DirectedGraph:
         return self.root == None
 
 def main():
+    #------------Tree--------------#
     # sampleroot = Node(24)
     # print(sampleroot)
-    tree1 = Tree()
-    tree1.add(24)
-    tree1.add(13)
-    tree1.add(5)
-    print(tree1.getCurrentNode())
-    tree1.setCurrentNode(13)
+    # tree1 = Tree()
+    # tree1.add(24)
+    # tree1.add(13)
+    # tree1.add(5)
     # print(tree1.getCurrentNode())
-    tree1.add(8)
-    print(tree1)
-    print(tree1.search(8))
-    print(tree1.search(24))
+    # tree1.setCurrentNode(13)
+    # print(tree1.getCurrentNode())
+    # tree1.add(8)
+    # print(tree1)
+    # print(tree1.search(8))
+    # print(tree1.search(24))
 
     # Tree's search runs in O(n) time because its worst case is
     # searching the entirety of the tree (length n), checking all of the rows
     # and finding no match.
+
+    #--------Directed Graph--------#
+    sampleVertex = Vertex(10)
+    
 
 if __name__ == "__main__":
     main()
