@@ -110,8 +110,7 @@ class Vertex:
 
 class DirectedGraph:
     def __init__(self):
-        self.currentVertex = None
-        self.checked = []
+        self.vertexList = []
 
     def __repr__(self):
         visual = ""
@@ -126,33 +125,24 @@ class DirectedGraph:
             visual += "\n"
         return visual
 
-    def getCurrentVertex(self):
-        current = "Current Node:\n"
-        current += self.currentVertex.__repr__() + "\n"
-        current += "Directed:\n"
-        current += "["
-        for n in self.currentNode.getEdges():
-            current += n.__repr__()
-        current += "]"
-        return current
-    
-    def setCurrentNode(self, target):
-        for n in self.currentNode.getChildren():
-            if n.getData() == target:
-                self.currentNode = n
-                return
-        change = input("Node not found.\nEnter 1 to set current to root, or press ENTER to remain at current node.\n")
-        if change == "1":
-            self.currentNode = self.root
-        else:
-            return
+    def getVertex(self, vert):
+        if vert in self.vertexList:
+            current = "Current Node:\n"
+            current += vert.__repr__() + "\n"
+            current += "Directed:\n"
+            current += "["
+            for n in self.currentNode.getEdges():
+                current += n.__repr__()
+            current += "]"
+            return current
 
-    def add(self, item):
-        newVertex = Vertex(item)
-        if self.currentVertex == None:
-            self.currentVertex = newVertex
+    def point(self, vert1, vert2):
+        if type(vert1) != Vertex:
+            raise("vert1 should be a vertex!")
+        if vert1 in self.vertexList:
+            vert1.addEdge(vert2)
         else:
-            self.currentVertex.addEdge(item)
+            
 
     def search(self, item):
         currentSelection = self.currentVertex
