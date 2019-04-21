@@ -129,25 +129,50 @@ class DirectedGraph:
             current += "]"
             return current
 
-    def point(self, vert1, vert2):
-        if type(vert1) != Vertex:
-            raise("vert1 should be a vertex!")
-        if vert1 not in self.vertexList:
-            self.vertexList.append(vert1)
-        vert1.addEdge(vert2)
-        if vert2 not in self.vertexList:
-            self.vertexList.append(vert2)
+    def getVertexList(self):
+        return self.vertexList
+
+    def point(self, vert, *args):
+        if type(vert) != Vertex:
+            raise("vert should be a vertex!")
+        if vert not in self.vertexList:
+            if self.vertexList == []:
+                self.vertexList.append(vert)
+            else:
+                raise("vert should exist in the graph!")
+        for arg in args:
+            if type(arg) == int:
+                arg = Vertex(arg)
+            if type(arg) == Vertex:
+                vert.addEdge(arg)
+                if arg not in self.vertexList:
+                    self.vertexList.append(arg)
+            else:
+                print(arg , "not a vertex, skipping...")
             
 
-    def search(self, item):
-        currentSelection = self.currentVertex
+    def search(self, item, start):
+        if self.isEmpty():
+            return False
+        if type(item) == Vertex:
+            item = item.getData()
+        if type(start) == Vertex:
+            start = start.getData()
+        for v in self.vertexList:
+            if v.getData() == start:
+                start = v
+                break
+        if type(start) == int:
+            raise("Starting point not in graph.")
+        currentSelection = [start]
         while currentSelection != []:
             nextLevel = []
-            for vertex in currentSelection:
-                if node.getData() == item:
+            for v in currentSelection:
+                if v.getData() == item:
                     return True
-                for n in node.getChildren():
-                    nextLevel.append(n)
+                for n in v.getEdges():
+                    if n != v:
+                        nextLevel.append(n)
             currentSelection = nextLevel
         return False
 
@@ -179,7 +204,18 @@ def main():
     directed1 = DirectedGraph()
     directed1.point(sampleVertex)
     print(directed1)
-    
+    directed1.point(sampleVertex, 2, 3, 4)
+    print(directed1)
+    directed1.point(directed1.getVertexList()[2], directed1.getVertexList()[2])
+    print(directed1)
+    # print(directed1.getVertexList()[2].getEdges())
+    print(directed1.search(5,10))
+
+# Directed Graph's search runs in O(n) time as well, where n is the length of the list.
+# It is very similar to tree's search function, but it can start in different locations,
+# allowing the opportunity for shorter search times when starting in close proximity
+# to the value being identified. At worst though, it will run through the entirety
+# of the structure. 
 
 if __name__ == "__main__":
     main()
