@@ -114,15 +114,8 @@ class DirectedGraph:
 
     def __repr__(self):
         visual = ""
-        vertices = []
-        while vertices != []:
-            newnodes = []
-            for node in vertices:
-                visual += "[" + str(node.getData()) + "]"
-                for n in node.getChildren():
-                    newnodes.append(n)
-                vertices = newnodes
-            visual += "\n"
+        for vert in self.vertexList:
+            visual += "[" + str(vert.getData()) + "]"
         return visual
 
     def getVertex(self, vert):
@@ -139,9 +132,11 @@ class DirectedGraph:
     def point(self, vert1, vert2):
         if type(vert1) != Vertex:
             raise("vert1 should be a vertex!")
-        if vert1 in self.vertexList:
-            vert1.addEdge(vert2)
-        else:
+        if vert1 not in self.vertexList:
+            self.vertexList.append(vert1)
+        vert1.addEdge(vert2)
+        if vert2 not in self.vertexList:
+            self.vertexList.append(vert2)
             
 
     def search(self, item):
@@ -157,7 +152,7 @@ class DirectedGraph:
         return False
 
     def isEmpty(self):
-        return self.currentVertex == None
+        return self.vertexList == []
 
 def main():
     #------------Tree--------------#
@@ -182,9 +177,8 @@ def main():
     #--------Directed Graph--------#
     sampleVertex = Vertex(10)
     directed1 = DirectedGraph()
-    directed1.add(sampleVertex)
-    directed1.add(12)
-    directed1.add()
+    directed1.point(sampleVertex)
+    print(directed1)
     
 
 if __name__ == "__main__":
